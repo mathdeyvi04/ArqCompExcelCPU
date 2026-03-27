@@ -20,15 +20,23 @@ BubbleSort:
     DEC R1 ; Decrement so that we can iterate over the array elements.
     LOAD R2 $0000 ; Use R2 for index iteration loop
 
-    INTERATION_LOOP:
-        ; "LOAD REG REG	-> loads memory unit at the address stored in REGB into REGA"
-        ; --------
-        LOAD R8 R2
-        TRAN R1 R3
-        SUB R3 R2
-        JGE BubbleSort ; In case the subtration above is equal to zero
-        INC R2 ; In case don't.
-        JMP INTERATION_LOOP
+    ITERATION_LOOP:
+        LOAD R3 $0000 ; Use R3 for index comparation loop
+        COMPARATION_LOOP:
+            ; Check two adjacent elements
+            LOAD R4 R3
+            INC R3
+            LOAD R5 R3
+            ; Transform into R6 and R7 temporally for subsequent subtraction
+            TRAN R4 R6
+            TRAN R5 R7
+            SUB R7 R6 ; Note the difference. [j+1] - [j]
+            JGE NO_SWAP_CASE
+                ; Load for display purposes only
+                SWAP_CASE:
+                    LOAD R13 $0100
+                NO_SWAP_CASE:
+                    LOAD R14 $0100
 
 END_EXECUTION:
     ; For some reason, if there isn't a final loop running AND executing some thing, it will result in a #REF error in the cells.
