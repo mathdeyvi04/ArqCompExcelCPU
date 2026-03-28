@@ -42,10 +42,17 @@ BubbleSort:
                     ; Nothing happens and it moves on to the next comparison if necessary
                     ; Transform into R6 temporally for subsequent subtraction
                     TRAN R1 R6
-                    INC R3 ; ONLY FOR TEST
                     SUB R6 R3
                     ; Think about the possibles cases
-                    JEQ COMPARATION_LOOP
+                    ; This took me sometime to realize
+                    JEQ AFTER_COMPARATION_LOOP
+                    JMP COMPARATION_LOOP
+        AFTER_COMPARATION_LOOP:
+            INC R2
+            TRAN R1 R6
+            SUB R6 R2
+            JEQ END_EXECUTION
+            JMP ITERATION_LOOP
 
 END_EXECUTION:
     ; For some reason, if there isn't a final loop running AND executing some thing, it will result in a #REF error in the cells.
