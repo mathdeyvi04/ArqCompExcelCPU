@@ -1,8 +1,8 @@
 .DATA
     ; Define the list numbers, just a few so it runs quickly.
-    NUM1 = $0005
+    NUM1 = $0009
     NUM2 = $0007
-    NUM3 = $0009
+    NUM3 = $0005
 
 .CODE
     ; Initialize in the registers and then store in ROM.
@@ -17,11 +17,12 @@
     ; Now, implement Bubble Sort
 
 BubbleSort:
-    DEC R1 ; Decrement so that we can iterate over the array elements.
+    DEC R1 ; Decrement to allow comparison with the element's index.
     LOAD R2 $0000 ; Use R2 for index iteration loop
 
     ITERATION_LOOP:
         LOAD R3 $0000 ; Use R3 for index comparation loop
+
         COMPARATION_LOOP:
             ; Check two adjacent elements
             LOAD R4 R3
@@ -30,13 +31,21 @@ BubbleSort:
             ; Transform into R6 and R7 temporally for subsequent subtraction
             TRAN R4 R6
             TRAN R5 R7
-            SUB R7 R6 ; Note the difference. [j+1] - [j]
+            SUB R7 R6
+            ; Note the difference: [j+1] - [j]
+            ; Therefore, if [j] is equal to or greater than [j+1], ZF or CF will be 1, respectively.
             JGE NO_SWAP_CASE
-                ; Load for display purposes only
                 SWAP_CASE:
-                    LOAD R13 $0100
+                    ; Load for display purposes only
+                    LOAD R13 $1000
                 NO_SWAP_CASE:
-                    LOAD R14 $0100
+                    ; Nothing happens and it moves on to the next comparison if necessary
+                    ; Transform into R6 temporally for subsequent subtraction
+                    TRAN R1 R6
+                    INC R3 ; ONLY FOR TEST
+                    SUB R6 R3
+                    ; Think about the possibles cases
+                    JEQ COMPARATION_LOOP
 
 END_EXECUTION:
     ; For some reason, if there isn't a final loop running AND executing some thing, it will result in a #REF error in the cells.
