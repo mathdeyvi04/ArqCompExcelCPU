@@ -1,11 +1,11 @@
 .DATA
     ; Define the list numbers, just a few so it runs quickly.
-    NUM1 = $0009
-    NUM2 = $0007
-    NUM3 = $0005
+    NUM1 = $0005
+    NUM2 = $0009
+    NUM3 = $000B
 
 .CODE
-    ; Initialize in the registers and then store in ROM.
+    ; Initialize in the registers and then store in RAM.
     LOAD R0 NUM1
     STORE R0 @0000
     LOAD R0 NUM2
@@ -28,16 +28,18 @@ BubbleSort:
             LOAD R4 R3
             INC R3
             LOAD R5 R3
-            ; Transform into R6 and R7 temporally for subsequent subtraction
+            ; Transform into R6 and R7 for store temporally
             TRAN R4 R6
             TRAN R5 R7
-            SUB R7 R6
+            SUB R5 R4
             ; Note the difference: [j+1] - [j]
-            ; Therefore, if [j] is equal to or greater than [j+1], ZF or CF will be 1, respectively.
+            ; Therefore, if [j] is equal to or greater than [j+1], ZF or CF will be 1, respectively
             JGE NO_SWAP_CASE
                 SWAP_CASE:
-                    ; Load for display purposes only
-                    LOAD R13 $1000
+                    DEC R3
+                    STORE R7 R3 ; Store [j+1] in [j]
+                    INC R3
+                    STORE R6 R3 ; Store [j] in [j+1]
                 NO_SWAP_CASE:
                     ; Nothing happens and it moves on to the next comparison if necessary
                     ; Transform into R6 temporally for subsequent subtraction
@@ -55,6 +57,6 @@ BubbleSort:
             JMP ITERATION_LOOP
 
 END_EXECUTION:
-    ; For some reason, if there isn't a final loop running AND executing some thing, it will result in a #REF error in the cells.
-    LOAD R0 $0100
+    ; Sets R0 to 999 to visualize the end
+    LOAD R0 $03E7
     JMP END_EXECUTION
