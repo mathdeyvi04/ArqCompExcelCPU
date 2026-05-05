@@ -1,31 +1,31 @@
 # Descrição
 
-Tradução de um código AssemblyMIPS32 que implementa BubbleSort para código AssemblyExcel16.
+Conjunto de trabalhos referentes à disciplina _Arquitetura de Computadores_.
 
-# Execução
+# Dependências
 
-Primeiro, é necessário a presença da biblioteca `openpyxl` para manipulação de arquivos `.xlsx`.
-Sendo assim, instale com:
+- Necessário biblioteca python de manipulação de planilhas excel:
 
-```python3
+```
 pip install openpyxl
 ```
 
-Para correta compilação, execute:
+- Necessário compilador C para VE3
 
-```python3
-python3 compileExcelASM16.py BubbleSortExcel16.s ROM.xlsx
+```
+sudo apt install build-essential
 ```
 
-Coloque o arquivo `*.s` que desejar executar na CPUExcel16 e assim o compilador transformará 
-as instruções para inseri-las em ROM.xlsx.
+- Necessário ferramentação de automação de terminal:
 
-Mais instruções de execução na CPUExcel16 estão presentes no PDF do trabalho.
+```
+sudo apt install make
+```
+
+- Necessário produto Microsoft **Excel**.
 
 # Outros
 
-- [Vídeo referente à execução do programa `BubbleSortExcel16.s`](ExecutionVideo.mp4)
-
-- [Pdf referente ao trabalho de desenvolvimento e de compreensão](Trabalho_de_Arquitetura_de_Computadores_I.pdf)
-
+Em cada pasta referente, é possível encontrar o respectivo trabalho e seus arquivos. Usaremos o escopo global apenas para organizar os arquivos
+comuns à ambos trabalho.
 
